@@ -51,9 +51,10 @@ import com.celzero.bravedns.util.Constants
         RpnProxy::class,
         WgHopMap::class,
         SubscriptionStatus::class,
-        SubscriptionStateHistory::class
+        SubscriptionStateHistory::class,
+        ProfileMetadata::class
     ],
-    version = 25,
+    version = 26,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -99,6 +100,7 @@ abstract class AppDatabase : RoomDatabase() {
                 .addMigrations(MIGRATION_22_23)
                 .addMigrations(MIGRATION_23_24)
                 .addMigrations(MIGRATION_24_25)
+                .addMigrations(MIGRATION_25_26)
                 .build()
 
         private val roomCallback: Callback =
@@ -1071,6 +1073,26 @@ abstract class AppDatabase : RoomDatabase() {
                 return false
             }
         }
+
+        private val MIGRATION_25_26: Migration =
+            object : Migration(25, 26) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    // Erstelle Tabelle für Profil-Metadaten
+                    db.execSQL(
+                        """
+                        CREATE TABLE 'ProfileMetadata' (
+                            'id' INTEGER NOT NULL,
+                            'name' TEXT NOT NULL,
+                            'description' TEXT NOT NULL,
+                            'createdAt' INTEGER NOT NULL,
+                            'updatedAt' INTEGER NOT NULL,
+                            'isActive' INTEGER NOT NULL DEFAULT 0,
+                            PRIMARY KEY (id)
+                        )
+                        """.trimIndent()
+                    )
+                }
+            }
     }
 
     // fixme: revisit the links to remove the pragma for each table
@@ -1127,6 +1149,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun subscriptionStateHistoryDao(): SubscriptionStateHistoryDao
 
+    abstract fun profileMetadataDao(): ProfileMetadataDao
+
     fun appInfoRepository() = AppInfoRepository(appInfoDAO())
 
     fun dohEndpointRepository() = DoHEndpointRepository(dohEndpointsDAO())
@@ -1171,5 +1195,7 @@ abstract class AppDatabase : RoomDatabase() {
     fun wgHopMapRepository() = WgHopMapRepository(wgHopMapDao())
 
     fun subscriptionStatusRepository() = SubscriptionStatusRepository(subscriptionStatusDao())
+
+    fun profileMetadataRepository() = ProfileMetadataRepository(profileMetadataDao())
 
 }

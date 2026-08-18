@@ -1,29 +1,96 @@
-*.iml
-.gradle
-/local.properties
-/.idea
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/app/build
-/build
-/captures
-/tun2socks/build/
-.externalNativeBuild
-.cxx
+```
+# Build artifacts
+build/
+target/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Configuration cache reports
+build/reports/configuration-cache/
+build/reports/problems/
+
+# Local configuration
 local.properties
-app/src/headless/assets
-/.knownPackages
-/*.patch
-/build-tools
-/emulator
-/licenses
-/patcher
-/platform-tools
-/platforms
-/tools
-/.kotlin/sessions
+
+# Dependencies
+node_modules/
+.libs/
+.dependency-cruiser.js
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Android specific
+*.keystore
+*.jks
+captures/
+*.cap
+*.pcap
+
+# Kotlin/Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.hprof
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.lib
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Distribution / packaging
+*.tar.*
+*.zip
+*.gz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.dmg
+*.iso
+
+# Testing
+*.tmp
+*.temp
+*.bak
+*~
+```
