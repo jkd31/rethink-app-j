@@ -73,6 +73,7 @@ class PersistentState(context: Context) : SimpleKrate(context), KoinComponent {
         const val DIAL_TIMEOUT_SEC = "dial_timeout_sec"
         const val AUTO_DIALS_PARALLEL = "auto_dials_parallel"
         const val STALL_ON_NO_NETWORK = "fail_open_on_no_network"
+        const val ACTIVE_PROFILE_ID = "active_profile_id"
     }
 
     // when vpn is started by the user, this is set to true; set to false when user stops
@@ -548,5 +549,22 @@ class PersistentState(context: Context) : SimpleKrate(context), KoinComponent {
             }
         proxyStatus.postValue(status)
         return proxyStatus
+    }
+
+    // --- Profil-Unterstützung ---
+
+    /**
+     * Speichert die ID des aktuell aktiven Profils.
+     */
+    fun setActiveProfileId(profileId: Long) {
+        longPref(ACTIVE_PROFILE_ID).set(profileId)
+    }
+
+    /**
+     * Gibt die ID des aktuell aktiven Profils zurück, oder null wenn keins gesetzt ist.
+     */
+    fun getActiveProfileId(): Long? {
+        val value = longPref(ACTIVE_PROFILE_ID).get()
+        return if (value == 0L) null else value
     }
 }
